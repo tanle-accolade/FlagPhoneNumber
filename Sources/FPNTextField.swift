@@ -22,13 +22,13 @@ open class FPNTextField: UITextField {
 
 	/// The size of the leftView
 	private var leftViewSize: CGSize {
-		let width = flagButtonSize.width + getWidth(text: phoneCodeTextField.text!)
+		let width = flagButtonSize.width + getWidth(text: phoneCodeLabel.text!)
 		let height = bounds.height
 
 		return CGSize(width: width, height: height)
 	}
 
-	private var phoneCodeTextField: UITextField = UITextField()
+	open var phoneCodeLabel: UILabel = UILabel()
 
 	private lazy var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
 	private var nbPhoneNumber: NBPhoneNumber?
@@ -38,13 +38,13 @@ open class FPNTextField: UITextField {
 
 	open override var font: UIFont? {
 		didSet {
-			phoneCodeTextField.font = font
+			phoneCodeLabel.font = font
 		}
 	}
 
 	open override var textColor: UIColor? {
 		didSet {
-			phoneCodeTextField.textColor = textColor
+			phoneCodeLabel.textColor = textColor
 		}
 	}
 
@@ -125,22 +125,22 @@ open class FPNTextField: UITextField {
 	}
 
 	private func setupPhoneCodeTextField() {
-		phoneCodeTextField.font = font
-		phoneCodeTextField.isUserInteractionEnabled = false
-		phoneCodeTextField.translatesAutoresizingMaskIntoConstraints = false
+		phoneCodeLabel.font = font
+		phoneCodeLabel.isUserInteractionEnabled = false
+		phoneCodeLabel.translatesAutoresizingMaskIntoConstraints = false
 	}
 
 	private func setupLeftView() {
 		leftView = UIView()
 		leftViewMode = .always
 		if #available(iOS 9.0, *) {
-			phoneCodeTextField.semanticContentAttribute = .forceLeftToRight
+			phoneCodeLabel.semanticContentAttribute = .forceLeftToRight
 		} else {
 			// Fallback on earlier versions
 		}
 
 		leftView?.addSubview(flagButton)
-		leftView?.addSubview(phoneCodeTextField)
+		leftView?.addSubview(phoneCodeLabel)
 
 		flagWidthConstraint = NSLayoutConstraint(item: flagButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0, constant: flagButtonSize.width)
 		flagHeightConstraint = NSLayoutConstraint(item: flagButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0, constant: flagButtonSize.height)
@@ -151,10 +151,10 @@ open class FPNTextField: UITextField {
 		NSLayoutConstraint(item: flagButton, attribute: .centerY, relatedBy: .equal, toItem: leftView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
 		NSLayoutConstraint(item: flagButton, attribute: .leading, relatedBy: .equal, toItem: leftView, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-		NSLayoutConstraint(item: phoneCodeTextField, attribute: .leading, relatedBy: .equal, toItem: flagButton, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-		NSLayoutConstraint(item: phoneCodeTextField, attribute: .trailing, relatedBy: .equal, toItem: leftView, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-		NSLayoutConstraint(item: phoneCodeTextField, attribute: .top, relatedBy: .equal, toItem: leftView, attribute: .top, multiplier: 1, constant: 0).isActive = true
-		NSLayoutConstraint(item: phoneCodeTextField, attribute: .bottom, relatedBy: .equal, toItem: leftView, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+		NSLayoutConstraint(item: phoneCodeLabel, attribute: .leading, relatedBy: .equal, toItem: flagButton, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+		NSLayoutConstraint(item: phoneCodeLabel, attribute: .trailing, relatedBy: .equal, toItem: leftView, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+		NSLayoutConstraint(item: phoneCodeLabel, attribute: .top, relatedBy: .equal, toItem: leftView, attribute: .top, multiplier: 1, constant: 0).isActive = true
+		NSLayoutConstraint(item: phoneCodeLabel, attribute: .bottom, relatedBy: .equal, toItem: leftView, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 	}
 
 	open override func updateConstraints() {
@@ -377,7 +377,7 @@ open class FPNTextField: UITextField {
 		flagButton.setImage(selectedCountry?.flag, for: .normal)
 
 		if let phoneCode = selectedCountry?.phoneCode {
-			phoneCodeTextField.text = phoneCode
+			phoneCodeLabel.text = phoneCode
 		}
 
 		if hasPhoneNumberExample == true {
@@ -395,15 +395,15 @@ open class FPNTextField: UITextField {
 	}
 
 	private func getWidth(text: String) -> CGFloat {
-		if let font = phoneCodeTextField.font {
+		if let font = phoneCodeLabel.font {
 			let fontAttributes = [NSAttributedString.Key.font: font]
 			let size = (text as NSString).size(withAttributes: fontAttributes)
 
 			return size.width.rounded(.up)
 		} else {
-			phoneCodeTextField.sizeToFit()
+			phoneCodeLabel.sizeToFit()
 
-			return phoneCodeTextField.frame.size.width.rounded(.up)
+			return phoneCodeLabel.frame.size.width.rounded(.up)
 		}
 	}
 
