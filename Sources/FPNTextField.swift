@@ -118,13 +118,14 @@ open class FPNTextField: UITextField {
 
 	private func setupFlagButton() {
 		flagButton.imageView?.contentMode = .scaleAspectFit
-		flagButton.accessibilityLabel = "flagButton"
+		flagButton.accessibilityLabel = "Flag Button"
 		flagButton.addTarget(self, action: #selector(displayCountries), for: .touchUpInside)
 		flagButton.translatesAutoresizingMaskIntoConstraints = false
 		flagButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
 	}
 
 	private func setupPhoneCodeTextField() {
+        phoneCodeLabel.accessibilityLabel = "Country Code Label"
 		phoneCodeLabel.font = font
 		phoneCodeLabel.isUserInteractionEnabled = false
 		phoneCodeLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -372,11 +373,11 @@ open class FPNTextField: UITextField {
 
 		flagButton.setImage(selectedCountry?.flag, for: .normal)
         if let country = selectedCountry {
-            flagButton.accessibilityLabel = String(format: "%@ Flag selected", country.name)
+            flagButton.accessibilityValue = String(format: "%@ Flag selected", country.name)
         }
 		if let phoneCode = selectedCountry?.phoneCode {
 			phoneCodeLabel.text = phoneCode
-            phoneCodeLabel.accessibilityLabel = "Code \(phoneCode)"
+            phoneCodeLabel.accessibilityValue = "Code \(phoneCode)"
 		}
 		if hasPhoneNumberExample == true {
 			updatePlaceholder()
@@ -436,7 +437,7 @@ open class FPNTextField: UITextField {
 		let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 		let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissCountries))
 
-		doneButton.accessibilityLabel = "doneButton"
+		doneButton.accessibilityLabel = "Done Button"
 
 		return [space, doneButton]
 	}
