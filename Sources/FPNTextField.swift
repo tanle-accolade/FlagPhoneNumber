@@ -133,11 +133,7 @@ open class FPNTextField: UITextField {
 	private func setupLeftView() {
 		leftView = UIView()
 		leftViewMode = .always
-		if #available(iOS 9.0, *) {
-			phoneCodeLabel.semanticContentAttribute = .forceLeftToRight
-		} else {
-			// Fallback on earlier versions
-		}
+        phoneCodeLabel.semanticContentAttribute = .forceLeftToRight
 
 		leftView?.addSubview(flagButton)
 		leftView?.addSubview(phoneCodeLabel)
@@ -378,6 +374,7 @@ open class FPNTextField: UITextField {
 
 		if let phoneCode = selectedCountry?.phoneCode {
 			phoneCodeLabel.text = phoneCode
+            phoneCodeLabel.accessibilityLabel = "Phone code \(phoneCode)"
 		}
 
 		if hasPhoneNumberExample == true {
