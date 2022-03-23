@@ -371,12 +371,13 @@ open class FPNTextField: UITextField {
 		}
 
 		flagButton.setImage(selectedCountry?.flag, for: .normal)
-
+        if let country = selectedCountry {
+            flagButton.accessibilityLabel = String(format: "%@ Flag selected", country.name)
+        }
 		if let phoneCode = selectedCountry?.phoneCode {
 			phoneCodeLabel.text = phoneCode
-            phoneCodeLabel.accessibilityLabel = "Phone code \(phoneCode)"
+            phoneCodeLabel.accessibilityLabel = "Code \(phoneCode)"
 		}
-
 		if hasPhoneNumberExample == true {
 			updatePlaceholder()
 		}
