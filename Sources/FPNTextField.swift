@@ -134,8 +134,6 @@ open class FPNTextField: UITextField {
 	private func setupLeftView() {
 		leftView = UIView()
 		leftViewMode = .always
-        phoneCodeLabel.semanticContentAttribute = .forceLeftToRight
-
 		leftView?.addSubview(flagButton)
 		leftView?.addSubview(phoneCodeLabel)
 
